@@ -1,0 +1,393 @@
+*,
+*::before,
+*::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+:root {
+    --white: #f6f6f6;
+    --hint-blue: #d6e4f0;
+    --blue: #1e56a0;
+    --dark-blue: #163172;
+}
+
+body {
+    background-color: var(--white);
+}
+
+a,
+a:active,
+a:visited {
+    text-decoration: none;
+    color: black;
+}
+
+/* header */
+header {
+    background-color: var(--hint-blue);
+    padding: 1rem;
+    margin-bottom: 100px;
+}
+
+header nav {
+    width: 67.25rem;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header nav .menu a {
+    color: var(--dark-blue);
+}
+
+header nav .menu a:first-of-type {
+    margin-right: 1.5rem;
+}
+
+header nav .dash-menu {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+header nav .dash-menu button {
+    padding: 0.75rem 1.5rem;
+    border: solid 1px #e7195a;
+    border-radius: 5px;
+    background-color: transparent;
+    font-size: 1rem;
+    color: #e7195a;
+    transition: background 200ms ease-in-out;
+    cursor: pointer;
+}
+
+header nav .dash-menu button:hover {
+    background-color: #e7195a;
+    color: white;
+}
+
+header nav .dash-menu p {
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--blue);
+}
+
+header nav .dash-menu p::before {
+    content: '@';
+}
+
+/* homepage */
+main {
+    width: 67.25rem;
+    margin: 0 auto;
+}
+
+.homepage {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card {
+    width: 40.625rem;
+    background-color: white;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    border-radius: 0.63rem;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.card .info,
+.report-page .info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+}
+
+.report-page p,
+.card p {
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 400;
+    line-height: normal;
+    color: #757575;
+}
+
+.report-page p.date,
+.card p.date {
+    font-size: 0.85rem;
+}
+
+.report-page h2,
+.card h2 {
+    margin: 1rem 0;
+    color: #000;
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.report-page .description,
+.card .description {
+    color: #333;
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+/* create form */
+.create {
+    width: 21.5625rem;
+}
+
+.create h2 {
+    margin-bottom: 1.88rem;
+    color: var(--dark-blue);
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-align: center;
+}
+
+.create-form label {
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    color: #000;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.create-form input[type="text"],
+.create-form textarea {
+    display: block;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    width: 21.5625rem;
+    border-radius: 0.3125rem;
+    border: 1px solid #BDBDBD;
+    background: #FFF;
+}
+
+.create-form input[type="text"] {
+    height: 2.5rem;
+}
+
+.create-form textarea {
+    height: 13.1875rem;
+    resize: vertical;
+}
+
+textarea.error,
+input[type='text'].error {
+    border-color: #e7195a;
+}
+
+.create-form button,
+.login form button,
+.signup form button {
+    display: block;
+    width: 100%;
+    height: 2.5rem;
+    border-radius: 0.3125rem;
+    background: var(--blue);
+    color: #FFF;
+    font-size: 1rem;
+    border: none;
+    margin-bottom: 1rem;
+    transition: background 200ms ease-in-out;
+    cursor: pointer;
+}
+
+.create-form button:hover,
+.login form button:hover,
+.signup form button:hover {
+    background-color: var(--dark-blue);
+}
+
+div.error,
+p.error {
+    padding: 1rem;
+    border: solid 1px #e7195a;
+    border-radius: 5px;
+    color: #e7195a;
+    background-color: #ffefef;
+}
+
+/* login + signup pages */
+div.signup,
+div.login {
+    text-align: center;
+}
+
+div.signup h2,
+div.login h2 {
+    color: #163172;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 4rem;
+}
+
+div.signup form,
+div.login form {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.signup form label,
+.login form label {
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    color: #000;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.signup form input,
+.login form input {
+    display: block;
+    width: 75%;
+    margin: 0 auto 1rem;
+    padding: .85rem;
+    border-radius: 0.3125rem;
+    border: 1px solid #BDBDBD;
+    background: #FFF;
+    font-size: 1rem;
+}
+
+.signup form button,
+.login form button {
+    width: 75%;
+    margin: 0 auto;
+}
+
+.login form .error,
+.signup form .error {
+    width: 75%;
+    margin: 1rem auto 0;
+}
+
+/* report page */
+.report-page .container {
+    width: 67.25rem;
+    margin: 0 auto;
+    padding: 1.25rem;
+    border-radius: 0.625rem;
+    background: #FFF;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.report-page .section-title {
+    margin-bottom: 1rem;
+    color: #163172;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.report-page .comment-form {
+    width: 67.25rem;
+}
+
+.comment-form textarea {
+    display: block;
+    padding: 1rem;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    width: 67.25rem;
+    height: 6.75rem;
+    flex-shrink: 0;
+    border-radius: 0.3125rem;
+    border: 1px solid #BDBDBD;
+    background: #FFF;
+    resize: vertical;
+}
+
+.comment-form button {
+    display: block;
+    width: 10.625rem;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.3125rem;
+    background: var(--blue);
+    color: #FFF;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    cursor: pointer;
+    transition: background 200ms ease-in-out;
+}
+
+.comment-form button:hover {
+    background-color: var(--dark-blue);
+}
+
+/* Comment component */
+.comment {
+    width: 67.25rem;
+    margin-bottom: 1.25rem;
+    padding: 1.125rem;
+    border-radius: 0.3125rem;
+    background: #FFF;
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+
+.comment .info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.comment .username {
+    color: var(--blue);
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.comment .date {
+    color: #757575;
+    font-size: 0.875rem;
+    font-style: italic;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.comment .body {
+    color: #333;
+    font-size: 0.95rem;
+    font-style: italic;
+    font-weight: 400;
+    line-height: normal;
+}
