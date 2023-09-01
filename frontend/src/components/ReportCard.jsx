@@ -2,16 +2,24 @@
 import { formatDistanceToNow } from "date-fns";
 // contexts
 import useBugsContext from "../hooks/useBugsContext";
+import useAuthContext from "../hooks/useAuthContext";
 // react router elements
 import { Link } from "react-router-dom";
 
-export default function ReportDetails({ report }) {
-    const { dispatch } = useBugsContext()
+export default function ReportCard({ report }) {
+    const { dispatch } = useBugsContext();
+    const { user } = useAuthContext();
 
     const handleDelete = async () => {
+        // exit out of the function if the user is not authenticated
+        if (!user) {
+            return;
+        }
+
         // send a post request to delete the report
         const response = await fetch(`http://localhost:3000/api/bugs/${report._id}`, {
             method: 'DELETE',
+            headers: { "Authorization": `Bearer ${user.token}` }
         });
         const json = await response.json();
 

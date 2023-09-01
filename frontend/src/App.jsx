@@ -6,7 +6,7 @@ import RootLayout from "./layouts/RootLayout"
 import LoginPage from "./pages/LoginPage"
 import SignupPage from "./pages/SignupPage"
 import HomePage from "./pages/HomePage"
-import ReportPage, { reportDetailsLoader } from "./pages/ReportPage"
+import ReportPage from "./pages/ReportPage"
 // contexts
 import BugsContextProvider from "./contexts/bugsContext"
 import AuthContextProvider from "./contexts/authContext"
@@ -15,7 +15,7 @@ const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<RootLayout />}>
             <Route index element={<HomePage />} />
-            <Route path="/reports/:reportId" loader={reportDetailsLoader} element={<ReportPage />} />
+            <Route path="/reports/:reportId" element={<ReportPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
         </Route>

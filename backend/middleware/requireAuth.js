@@ -5,7 +5,10 @@ export async function requireAuth(req, res, next) {
     // check the user's auth
     const { authorization } = req.headers;
     // respond with an error if no auth
-    if (!authorization) res.status(401).json({ error: "Authorization token required" });
+    if (!authorization) {
+        res.status(401).json({ error: "Authorization token required" });
+        return;
+    }
     // extract token from auth string
     const token = authorization.split(" ")[1];
     try {

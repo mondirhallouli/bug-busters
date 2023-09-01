@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useBugsContext from '../hooks/useBugsContext';
+import useAuthContext from "../hooks/useAuthContext";
 
 export default function CreateForm() {
     const [title, setTitle] = useState('');
@@ -7,9 +8,16 @@ export default function CreateForm() {
     const [emptyFields, setEmptyFields] = useState([]);
     const [error, setError] = useState(null);
     const { dispatch } = useBugsContext();
+    const { user } = useAuthContext();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        // exit the function if user is not authenticated
+        if (!user) {
+            setError("You must be logged in to continue");
+            return;
+        }
 
         // save the body data in an object
         const data = { title, description };
@@ -17,7 +25,7 @@ export default function CreateForm() {
         // send a post request to the server
         const response = await fetch('http://localhost:3000/api/bugs', {
             method: 'POST',
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${user.token}` },
             body: JSON.stringify(data),
         });
 
