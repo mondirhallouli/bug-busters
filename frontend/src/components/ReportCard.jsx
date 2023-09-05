@@ -30,18 +30,18 @@ export default function ReportCard({ report }) {
     };
 
     return (
-        <Link to={`reports/${report._id}`}>
-            <div className="card" >
-                <div className="info">
-                    <p>Username asked:</p>
-                    <span onClick={handleDelete} className="material-symbols-outlined">
-                        delete
-                    </span>
-                </div>
-                <p className="date">{formatDistanceToNow(new Date(report.createdAt), { addSuffix: true })}</p>
+        <div className="card" >
+            <div className="info">
+                <p>{report.user ? `${report.user.username} asked:` : "Username asked:"}</p>
+                <span onClick={handleDelete} className="material-symbols-outlined">
+                    delete
+                </span>
+            </div>
+            <p className="date">{formatDistanceToNow(new Date(report.createdAt), { addSuffix: true })}</p>
+            <Link to={`reports/${report._id}`}>
                 <h2>{report.title}</h2>
                 <p className="description">{report.description}</p>
-            </div>
-        </Link>
+            </Link>
+        </div>
     );
 }
