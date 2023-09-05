@@ -49,10 +49,11 @@ export async function createReport(req, res) {
 
     // use the request's info to create and save report to db
     try {
+        const user = req.user;
         // create + save the bug to db
-        const response = await Bug.create({ title, description })
+        const response = await Bug.create({ title, description, user });
         // send the result to the client
-        res.status(200).json(response)
+        res.status(200).json(response);
     } catch (error) {
         res.status(400).json({ error: 'Please fill out all the fields', emptyFields })
     }

@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema;
 
 // comment schema
-const commentSchema = new Schema({
+export const commentSchema = new Schema({
     username: {
         type: String,
         required: true,

@@ -6,7 +6,7 @@ import validator from "validator";
 const Schema = mongoose.Schema
 
 // user schema
-const userSchema = new Schema({
+export const userSchema = new Schema({
     username: {
         type: String,
         required: true,
@@ -29,7 +29,7 @@ userSchema.statics.signup = async function (username, email, password) {
     if (!username || !email || !password) throw Error("All fields must be filled");
 
     // check if the email already exists
-    const exists = await this.findOne({ username, email });
+    const exists = await this.findOne({ email });
 
     // if it already exists, throw error
     if (exists) {

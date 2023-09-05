@@ -1,4 +1,6 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
+import { commentSchema } from "./commentModel.js";
+import { userSchema } from "./userModel.js";
 
 const Schema = mongoose.Schema;
 
@@ -11,7 +13,16 @@ const bugSchema = new Schema({
     description: {
         type: String,
         required: true,
-    }
+    },
+    user: {
+        type: userSchema,
+        default: {},
+        required: true,
+    },
+    comments: {
+        type: [commentSchema],
+        default: [],
+    },
 }, { timestamps: true });
 
 // bug model
