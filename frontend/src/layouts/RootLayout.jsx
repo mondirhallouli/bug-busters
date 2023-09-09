@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import useAuthContext from '../hooks/useAuthContext';
 import useLogout from '../hooks/useLogout';
 
@@ -23,6 +23,8 @@ export default function RootLayout() {
                     {
                         user && (
                             <div className="dash-menu">
+                                <NavLink to="/" className="dash-link">Home</NavLink>
+                                <NavLink to="/reports" className="dash-link">My Reports</NavLink>
                                 <p className="username">{user.username}</p>
                                 <button onClick={handleLogout} className="logout">Logout</button>
                             </div>

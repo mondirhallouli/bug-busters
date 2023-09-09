@@ -54,7 +54,7 @@ header nav .dash-menu {
     gap: 1rem;
 }
 
-header nav .dash-menu button {
+header nav .dash-menu button.logout {
     padding: 0.75rem 1.5rem;
     border: solid 1px #e7195a;
     border-radius: 5px;
@@ -65,7 +65,7 @@ header nav .dash-menu button {
     cursor: pointer;
 }
 
-header nav .dash-menu button:hover {
+header nav .dash-menu button.logout:hover {
     background-color: #e7195a;
     color: white;
 }

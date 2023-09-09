@@ -9,6 +9,7 @@ import HomePage from "./pages/HomePage"
 import ReportPage from "./pages/ReportPage"
 // contexts
 import useAuthContext from "./hooks/useAuthContext"
+import MyReports from "./pages/MyReports"
 
 // const router = createBrowserRouter(
 //     createRoutesFromElements(
@@ -31,6 +32,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<RootLayout />}>
                         <Route index element={user ? <HomePage /> : <Navigate to="/login" />} />
+                        <Route path="/reports" element={user ? <MyReports /> : <Navigate to="/login" />} />
                         <Route path="/reports/:reportId" element={user ? <ReportPage /> : <Navigate to="/login" />} />
                         <Route path="/login" element={user ? <Navigate to="/" /> : <LoginPage />} />
                         <Route path="/signup" element={user ? <Navigate to="/" /> : <SignupPage />} />
