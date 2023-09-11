@@ -38,7 +38,7 @@ export default function ReportCard({ report }) {
                 </span>
             </div>
             <p className="date">{formatDistanceToNow(new Date(report.createdAt), { addSuffix: true })}</p>
-            <Link to={`${report._id}`}>
+            <Link to={`reports/${report._id}`}>
                 <h2>{report.title}</h2>
                 <p className="description">{report.description}</p>
             </Link>

@@ -7,6 +7,16 @@ import useAuthContext from '../hooks/useAuthContext';
 export default function HomePage() {
     const { reports, dispatch } = useBugsContext()
     const { user } = useAuthContext();
+    const [filtered, setFiltered] = useState(null);
+
+    const handleFilter = () => {
+        const filteredItems = reports.filter(report => report.user.email === user.email);
+        setFiltered(filteredItems);
+    };
+
+    const handleFilterAll = () => {
+        setFiltered(reports);
+    };
 
     useEffect(() => {
         const getReports = async () => {
@@ -25,13 +35,24 @@ export default function HomePage() {
         if (user) {
             getReports();
         }
+
     }, [dispatch, user]);
 
     return (
         <div className="homepage">
             <section className="cards-container">
+                <section className="filter-buttons">
+                    <button onClick={handleFilterAll}>All reports</button>
+                    <button onClick={handleFilter}>My reports</button>
+                </section>
+
                 {
-                    reports && reports.map(report => (
+                    !filtered && reports && reports.map(report => (
+                        <ReportCard key={report._id} report={report} />
+                    ))
+                }
+                {
+                    filtered && filtered.map(report => (
                         <ReportCard key={report._id} report={report} />
                     ))
                 }

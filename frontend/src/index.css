@@ -91,6 +91,26 @@ main {
     justify-content: space-between;
 }
 
+.filter-buttons {
+    margin-bottom: 1rem;
+}
+
+.filter-buttons button {
+    border: solid 1px rgb(118, 144, 214);
+    border-radius: 8px;
+    padding: 0.5rem;
+    margin-right: 1rem;
+    font-size: 0.8rem;
+    color: rgb(118, 144, 214);
+    background-color: transparent;
+    transition: background 150ms ease-in-out;
+}
+
+.filter-buttons button:hover {
+    background-color: rgb(118, 144, 214);
+    color: black;
+}
+
 .card {
     width: 40.625rem;
     background-color: white;
