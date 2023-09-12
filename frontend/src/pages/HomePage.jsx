@@ -10,7 +10,7 @@ export default function HomePage() {
     const [filtered, setFiltered] = useState(null);
 
     const handleFilter = () => {
-        const filteredItems = reports.filter(report => report.user.email === user.email);
+        const filteredItems = reports.filter(report => report.author === user.username);
         setFiltered(filteredItems);
     };
 

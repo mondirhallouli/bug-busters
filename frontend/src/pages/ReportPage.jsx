@@ -63,7 +63,7 @@ export default function ReportPage() {
             {
                 report && (<div className="container" >
                     <div className="info">
-                        <p>{report.user ? `${report.user.username} asked:` : "Anonymous asked:"}</p>
+                        <p>{report.author ? `${report.author} asked:` : "Anonymous asked:"}</p>
                         <span onClick={handleDelete} className="material-symbols-outlined">
                             delete
                         </span>

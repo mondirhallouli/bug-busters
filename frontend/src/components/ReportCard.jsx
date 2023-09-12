@@ -32,7 +32,7 @@ export default function ReportCard({ report }) {
     return (
         <div className="card" >
             <div className="info">
-                <p>{report.user ? `${report.user.username} asked:` : "Username asked:"}</p>
+                <p>{report.author ? `${report.author} asked:` : "Username asked:"}</p>
                 <span onClick={handleDelete} className="material-symbols-outlined">
                     delete
                 </span>
