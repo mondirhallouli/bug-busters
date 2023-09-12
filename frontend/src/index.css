@@ -127,14 +127,29 @@ main {
     align-items: center;
 }
 
-.info span {
+.info button {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 35px;
     height: 35px;
+    background: transparent;
+    border: none;
     cursor: pointer;
     z-index: 100;
+    color: #e7195a;
+    opacity: 0.5;
+    transition: opacity 100ms ease-in-out;
+}
+
+.info button:hover {
+    opacity: 1;
+}
+
+.info button:disabled {
+    color: #000;
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 
 .report-page p,

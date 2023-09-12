@@ -16,6 +16,7 @@ export default function ReportPage() {
     const { user } = useAuthContext();
     // navigate to a path
     const navigate = useNavigate();
+    const [canDelete, setCanDelete] = useState(false);
 
     // this handles the deletion on the report page
     const handleDelete = async () => {
@@ -55,6 +56,10 @@ export default function ReportPage() {
         if (user) {
             getReportDetails();
         }
+
+        if (report && (user.username !== report.author)) {
+            setCanDelete(!canDelete);
+        }
     }, [user]);
 
     return (
@@ -64,9 +69,9 @@ export default function ReportPage() {
                 report && (<div className="container" >
                     <div className="info">
                         <p>{report.author ? `${report.author} asked:` : "Anonymous asked:"}</p>
-                        <span onClick={handleDelete} className="material-symbols-outlined">
+                        <button onClick={handleDelete} className="material-symbols-outlined" id="delete" disabled={canDelete}>
                             delete
-                        </span>
+                        </button>
                     </div>
                     <p className="date">{formatDistanceToNow(new Date(report.createdAt), { addSuffix: true })}</p>
                     <h2>{report.title}</h2>
@@ -75,10 +80,12 @@ export default function ReportPage() {
                 )}
 
             <h2 className="section-title">Comments:</h2>
+
             {/* comments section */}
             <Comment />
 
             <h2 className="section-title">What do you think?</h2>
+
             {/* write a comment */}
             <form className="comment-form">
                 <textarea name="comment" placeholder="write something here..." />
@@ -87,16 +94,3 @@ export default function ReportPage() {
         </div>
     )
 }
-
-// loader function to get the specific report details
-// export async function reportDetailsLoader({ params }) {
-//     const { reportId } = params;
-//     // fetch the data inside a try catch block
-//     const response = await fetch(`http://localhost:3000/api/bugs/${reportId}`);
-//     const json = await response.json();
-
-//     // else throw an error
-//     if (!response.ok) throw Error(json.error);
-//     // if response is ok return the data
-//     return json;
-// }
