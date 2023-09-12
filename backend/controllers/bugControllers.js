@@ -71,10 +71,16 @@ export async function deleteReport(req, res) {
         return;
     }
 
+
     // use the id to delete the specified document
     try {
         // delete the document from db
-        const response = await Bug.findOneAndDelete({ _id: id })
+        const report = await Bug.findOne({ _id: id });
+        // stop the deletion if the report isn't created by the current user
+        if (report.author !== req.user.username) {
+            return;
+        }
+        const response = await Bug.deleteOne({ _id: report._id });
         // respond to the client with the success object 
         res.status(200).json(response);
     } catch (error) {
