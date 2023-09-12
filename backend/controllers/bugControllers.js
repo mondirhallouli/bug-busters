@@ -48,14 +48,15 @@ export async function createReport(req, res) {
     if (!description) emptyFields.push('description');
 
     // use the request's info to create and save report to db
+    const author = req.user.username;
+
     try {
-        const user = req.user;
         // create + save the bug to db
-        const response = await Bug.create({ title, description, user });
+        const response = await Bug.create({ title, description, author });
         // send the result to the client
         res.status(200).json(response);
     } catch (error) {
-        res.status(400).json({ error: 'Please fill out all the fields', emptyFields })
+        res.status(400).json({ error: "Please fill out all fields", emptyFields })
     }
 }
 

@@ -15,6 +15,7 @@ export async function requireAuth(req, res, next) {
         // verify token and set the user's id to a prop on the request
         const { id } = jwt.verify(token, process.env.JWT_SECRET);
         req.user = await User.findOne({ _id: id });
+        req.user.password = "";
         next();
     } catch (error) {
         // if verfication is not successful respond with an error

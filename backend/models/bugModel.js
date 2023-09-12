@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import { commentSchema } from "./commentModel.js";
-import { userSchema } from "./userModel.js";
 
 const Schema = mongoose.Schema;
 
@@ -14,9 +13,8 @@ const bugSchema = new Schema({
         type: String,
         required: true,
     },
-    user: {
-        type: userSchema,
-        default: {},
+    author: {
+        type: String,
         required: true,
     },
     comments: {
