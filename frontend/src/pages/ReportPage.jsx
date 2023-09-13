@@ -17,6 +17,8 @@ export default function ReportPage() {
     // navigate to a path
     const navigate = useNavigate();
     const [canDelete, setCanDelete] = useState(false);
+    const [canEdit, setCanEdit] = useState(false);
+    const [openEdit, setOpenEdit] = useState(false);
 
     // this handles the deletion on the report page
     const handleDelete = async () => {
@@ -39,6 +41,13 @@ export default function ReportPage() {
 
     };
 
+    // handle the editing of a report
+    const handleEdit = () => {
+
+        // open the edit modal
+        setOpenEdit(!openEdit);
+    };
+
     useEffect(() => {
         const getReportDetails = async () => {
             // fetch the data inside a try catch block
@@ -59,6 +68,7 @@ export default function ReportPage() {
 
         if (report && (user.username !== report.author)) {
             setCanDelete(!canDelete);
+            setCanEdit(!canEdit);
         }
     }, [user]);
 
@@ -69,9 +79,14 @@ export default function ReportPage() {
                 report && (<div className="container" >
                     <div className="info">
                         <p>{report.author ? `${report.author} asked:` : "Anonymous asked:"}</p>
-                        <button onClick={handleDelete} className="material-symbols-outlined" id="delete" disabled={canDelete}>
-                            delete
-                        </button>
+                        <section className="card-actions">
+                            <button onClick={handleDelete} className="material-symbols-outlined" disabled={canDelete}>
+                                delete
+                            </button>
+                            <button onClick={handleEdit} className="material-symbols-outlined edit-btn" disabled={canEdit}>
+                                edit
+                            </button>
+                        </section>
                     </div>
                     <p className="date">{formatDistanceToNow(new Date(report.createdAt), { addSuffix: true })}</p>
                     <h2>{report.title}</h2>

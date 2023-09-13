@@ -11,6 +11,8 @@ export default function ReportCard({ report }) {
     const { dispatch } = useBugsContext();
     const { user } = useAuthContext();
     const [canDelete, setCanDelete] = useState(false);
+    const [canEdit, setCanEdit] = useState(false);
+    const [openEdit, setOpenEdit] = useState(false);
 
     const handleDelete = async () => {
         // exit out of the function if the user is not authenticated
@@ -31,25 +33,39 @@ export default function ReportCard({ report }) {
 
     };
 
+    const handleEdit = () => {
+
+        // open the edit modal
+        setOpenEdit(!openEdit);
+    };
+
     useEffect(() => {
         if (user.username !== report.author) {
             setCanDelete(!canDelete);
+            setCanEdit(!canEdit);
         }
     }, []);
 
     return (
-        <div className="card" >
-            <div className="info">
-                <p>{report.author ? `${report.author} asked:` : "Username asked:"}</p>
-                <button onClick={handleDelete} className="material-symbols-outlined" disabled={canDelete}>
-                    delete
-                </button>
+        <>
+            <div className="card" >
+                <div className="info">
+                    <p>{report.author ? `${report.author} asked:` : "Username asked:"}</p>
+                    <section className="card-actions">
+                        <button onClick={handleDelete} className="material-symbols-outlined delete" disabled={canDelete}>
+                            delete
+                        </button>
+                        <button onClick={handleEdit} className="material-symbols-outlined edit-btn" disabled={canEdit}>
+                            edit
+                        </button>
+                    </section>
+                </div>
+                <p className="date">{formatDistanceToNow(new Date(report.createdAt), { addSuffix: true })}</p>
+                <Link to={`reports/${report._id}`}>
+                    <h2>{report.title}</h2>
+                    <p className="description">{report.description}</p>
+                </Link>
             </div>
-            <p className="date">{formatDistanceToNow(new Date(report.createdAt), { addSuffix: true })}</p>
-            <Link to={`reports/${report._id}`}>
-                <h2>{report.title}</h2>
-                <p className="description">{report.description}</p>
-            </Link>
-        </div>
+        </>
     );
 }

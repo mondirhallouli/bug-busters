@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 *,
 *::before,
 *::after {
@@ -26,35 +30,35 @@ a:visited {
 }
 
 /* header */
-header {
+/* header {
     background-color: var(--hint-blue);
     padding: 1rem;
     margin-bottom: 100px;
-}
+} */
 
-header nav {
+/* header nav {
     width: 67.25rem;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
+} */
 
-header nav .menu a {
+/* header nav .menu a {
     color: var(--dark-blue);
-}
+} */
 
-header nav .menu a:first-of-type {
+/* header nav .menu a:first-of-type {
     margin-right: 1.5rem;
-}
+} */
 
-header nav .dash-menu {
+/* header nav .dash-menu {
     display: flex;
     align-items: center;
     gap: 1rem;
-}
+} */
 
-header nav .dash-menu button.logout {
+/* header nav .dash-menu button.logout {
     padding: 0.75rem 1.5rem;
     border: solid 1px #e7195a;
     border-radius: 5px;
@@ -63,22 +67,22 @@ header nav .dash-menu button.logout {
     color: #e7195a;
     transition: background 200ms ease-in-out;
     cursor: pointer;
-}
+} */
 
-header nav .dash-menu button.logout:hover {
+/* header nav .dash-menu button.logout:hover {
     background-color: #e7195a;
     color: white;
-}
+} */
 
-header nav .dash-menu p {
+/* header nav .dash-menu p {
     font-size: 1rem;
     font-style: italic;
     color: var(--blue);
-}
+} */
 
-header nav .dash-menu p::before {
+/* header nav .dash-menu p::before {
     content: '@';
-}
+} */
 
 /* homepage */
 main {
@@ -127,26 +131,25 @@ main {
     align-items: center;
 }
 
-.info button {
+.info .card-actions {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+}
+
+.card-actions button {
+    display: block;
     width: 35px;
     height: 35px;
-    background: transparent;
+    background-color: transparent;
     border: none;
     cursor: pointer;
-    z-index: 100;
-    color: #e7195a;
-    opacity: 0.5;
+    opacity: 0.7;
     transition: opacity 100ms ease-in-out;
 }
 
-.info button:hover {
-    opacity: 1;
-}
-
-.info button:disabled {
+.card-actions button:disabled,
+.report-page .card-actions button:disabled {
     color: #000;
     opacity: 0.4;
     cursor: not-allowed;
@@ -191,10 +194,12 @@ main {
 }
 
 /* create form */
+.edit,
 .create {
     width: 21.5625rem;
 }
 
+.edit h2,
 .create h2 {
     margin-bottom: 1.88rem;
     color: var(--dark-blue);
@@ -205,6 +210,7 @@ main {
     text-align: center;
 }
 
+.edit-form label,
 .create-form label {
     display: inline-block;
     padding-bottom: 0.5rem;
@@ -215,6 +221,8 @@ main {
     line-height: normal;
 }
 
+.edit-form input[type="text"],
+.edit-form textarea,
 .create-form input[type="text"],
 .create-form textarea {
     display: block;
@@ -226,10 +234,12 @@ main {
     background: #FFF;
 }
 
+.edit-form input[type="text"],
 .create-form input[type="text"] {
     height: 2.5rem;
 }
 
+.edit-form textarea,
 .create-form textarea {
     height: 13.1875rem;
     resize: vertical;
@@ -240,11 +250,12 @@ input[type='text'].error {
     border-color: #e7195a;
 }
 
+.edit-form button,
 .create-form button,
 .login form button,
 .signup form button {
     display: block;
-    width: 100%;
+    width: 21.5625rem;
     height: 2.5rem;
     border-radius: 0.3125rem;
     background: var(--blue);
@@ -256,6 +267,7 @@ input[type='text'].error {
     cursor: pointer;
 }
 
+.edit-form button:hover,
 .create-form button:hover,
 .login form button:hover,
 .signup form button:hover {
@@ -269,6 +281,14 @@ p.error {
     border-radius: 5px;
     color: #e7195a;
     background-color: #ffefef;
+}
+
+.success {
+    padding: 1rem;
+    border: solid 1px rgb(0, 172, 0);
+    border-radius: 5px;
+    color: rgb(0, 172, 0);
+    background-color: rgba(0, 172, 0, 0, 5);
 }
 
 /* login + signup pages */
@@ -426,4 +446,58 @@ div.login form {
     font-style: italic;
     font-weight: 400;
     line-height: normal;
+}
+
+/* Edit modal form */
+.edit-modal {
+    visibility: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit {
+    width: 30rem;
+    padding: 2rem;
+    border-radius: 8px;
+    background-color: white;
+    text-align: center;
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.edit-form .form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.edit-form .form-actions button {
+    display: inline-block;
+    width: 10rem;
+}
+
+.edit-form .form-actions button.cancel-edit {
+    background-color: #e7195a;
+    color: white;
+    opacity: 0.5;
+    transition: opacity 100ms ease-in-out;
+}
+
+.edit-form .form-actions button.cancel-edit:hover {
+    opacity: 1;
 }

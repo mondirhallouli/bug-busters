@@ -12,27 +12,25 @@ export default function RootLayout() {
 
     return (
         <div className="root-layout">
-            <header>
-                <nav>
-                    <div>
-                        <h2 className="logo">
-                            <Link to="/">Bug Busters</Link>
-                        </h2>
-                    </div>
+            <header className="bg-skyblue p-4 mb-24">
+                <nav className="container md:w-3/5 mx-auto flex justify-between items-center gap-6 font-openSans">
+                    <h2 className="font-inter font-bold text-xl">
+                        <Link to="/" className="text-darkblue">Bug Busters</Link>
+                    </h2>
                     {/* display this when the user is logged in */}
                     {
                         user && (
-                            <div className="dash-menu">
-                                <p className="username">{user.username}</p>
-                                <button onClick={handleLogout} className="logout">Logout</button>
+                            <div className="flex items-center gap-4">
+                                <p className="text-base italic text-darkblue">@{user.username}</p>
+                                <button onClick={handleLogout} className="py-2 px-4 bg-transparent border border-solid rounded-md border-pinkred cursor-pointer text-pinkred hover:text-pinkwhite hover:bg-pinkred">Logout</button>
                             </div>
                         )
                     }
                     {/* display this when user is logged out */}
                     {!user &&
                         (
-                            <div className="menu">
-                                <Link to="/login">Login</Link>
+                            <div>
+                                <Link to="/login" className="mr-6">Login</Link>
                                 <Link to="/signup">Signup</Link>
                             </div>
                         )
