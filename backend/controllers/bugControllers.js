@@ -105,9 +105,14 @@ export async function updateReport(req, res) {
     // fetch the target document and update it using the id and content above
     try {
         // fetch and update
-        const response = await Bug.findOneAndUpdate({ _id: id }, { title, description })
+        const report = await Bug.findOne({ _id: id }, { title, description });
+        // stop the deletion if the report isn't created by the current user
+        if (report.author !== req.user.username) {
+            return;
+        }
+        const response = await Bug.updateOne({ _id: id }, { title, description });
         // respond with the success object
-        res.status(200).json(response);
+        res.status(200).json({ message: "Report updated successfully!", response });
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
