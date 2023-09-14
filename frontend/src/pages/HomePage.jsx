@@ -39,11 +39,11 @@ export default function HomePage() {
     }, [dispatch, user]);
 
     return (
-        <div className="homepage">
-            <section className="cards-container">
-                <section className="filter-buttons">
-                    <button onClick={handleFilterAll}>All reports</button>
-                    <button onClick={handleFilter}>My reports</button>
+        <div className="">
+            <section>
+                <section className="mb-4">
+                    <button onClick={handleFilterAll} className='border border-darkblue rounded-md p-2 mr-4 text-sm text-darkblue bg-transparent transition-colors hover:bg-darkblue hover:text-pinkwhite'>All reports</button>
+                    <button onClick={handleFilter} className='border border-darkblue rounded-md p-2 mr-4 text-sm text-darkblue bg-transparent transition-colors hover:bg-darkblue hover:text-pinkwhite'>My reports</button>
                 </section>
 
                 {
@@ -58,7 +58,7 @@ export default function HomePage() {
                 }
             </section>
 
-            <CreateForm />
+            {/* <CreateForm /> */}
         </div>
     )
 }

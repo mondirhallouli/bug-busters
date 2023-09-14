@@ -11,7 +11,7 @@ export default function RootLayout() {
     };
 
     return (
-        <div className="root-layout">
+        <div className="root-layout relative">
             <header className="bg-skyblue p-4 mb-24">
                 <nav className="container md:w-3/5 mx-auto flex justify-between items-center gap-6 font-openSans">
                     <h2 className="font-inter font-bold text-xl">
@@ -38,7 +38,7 @@ export default function RootLayout() {
                 </nav>
 
             </header>
-            <main>
+            <main className="container md:w-3/5 mx-auto p-4">
                 <Outlet />
             </main>
         </div>

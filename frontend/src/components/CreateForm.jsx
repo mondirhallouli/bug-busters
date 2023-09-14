@@ -45,34 +45,39 @@ export default function CreateForm() {
     };
 
     return (
-        <div className="create">
-            <h2>Create a new bug report</h2>
+        <div className="w-screen h-screen p-4 absolute top-0 left-0 flex flex-col justify-center items-center">
+            <section className="w-full md:w-3/6 lg:w-2/5 shadow-lg border rounded-md mx-auto bg-white p-4">
+                <h2 className="mb-7 text-darkblue text-xl font-semibold text-center">Create a new bug report</h2>
 
-            <form className="create-form" onSubmit={handleSubmit}>
-                <label>Title:</label>
-                <input
-                    type="text"
-                    className={emptyFields.includes('title') ? 'error' : ''}
-                    name="title"
-                    placeholder="Enter a title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
+                <form className="create-form" onSubmit={handleSubmit}>
+                    <label className="inline-block pb-2 text-base font-openSans">Title:</label>
+                    <input
+                        type="text"
+                        className={`block w-full mb-4 p-3 rounded-md border border-zinc-400 bg-white ${emptyFields.includes('title') ? 'border-pinkred' : ''}`}
+                        name="title"
+                        placeholder="Enter a title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
 
-                <label>Description:</label>
-                <textarea
-                    name="description"
-                    className={emptyFields.includes('description') ? 'error' : ''}
-                    placeholder="Enter a description..."
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                />
+                    <label className="inline-block pb-2 text-base font-openSans">Description:</label>
+                    <textarea
+                        name="description"
+                        className={`block w-full h-52 resize-y mb-4 p-3 rounded-md border border-zinc-400 bg-white ${emptyFields.includes('description') ? 'border-pinkred' : ''}`}
+                        placeholder="Enter a description..."
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                    />
 
-                <button type="submit">Create</button>
+                    <section className="mb-4">
+                        <button type="submit" className="inline-block px-3 py-2 mr-2 border border-darkerblue rounded-md bg-darkblue text-white text-base cursor-pointer transition-colors hover:bg-darkerblue">Create</button>
+                        <button className="inline-block px-3 py-2 border border-pinkred rounded-md bg-pinkwhite text-pinkred text-base cursor-pointer transition-colors hover:bg-pinkred hover:text-pinkwhite">Cancel</button>
+                    </section>
 
-                {/* error container to display the error message */}
-                {error && <p className="error">{error}</p>}
-            </form>
+                    {/* error container to display the error message */}
+                    {error && <p className="p-4 border border-pinkred rounded-md text-pinkred bg-pinkwhite">{error}</p>}
+                </form>
+            </section>
         </div>
     )
 }

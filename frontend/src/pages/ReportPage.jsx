@@ -16,8 +16,8 @@ export default function ReportPage() {
     const { user } = useAuthContext();
     // navigate to a path
     const navigate = useNavigate();
-    const [canDelete, setCanDelete] = useState(false);
-    const [canEdit, setCanEdit] = useState(false);
+    const [canDelete, setCanDelete] = useState(true);
+    const [canEdit, setCanEdit] = useState(true);
     const [openEdit, setOpenEdit] = useState(false);
 
     // this handles the deletion on the report page
@@ -76,35 +76,47 @@ export default function ReportPage() {
         <div className="report-page">
             {!report && <div>loading...</div>}
             {
-                report && (<div className="container" >
-                    <div className="info">
-                        <p>{report.author ? `${report.author} asked:` : "Anonymous asked:"}</p>
-                        <section className="card-actions">
-                            <button onClick={handleDelete} className="material-symbols-outlined" disabled={canDelete}>
-                                delete
-                            </button>
-                            <button onClick={handleEdit} className="material-symbols-outlined edit-btn" disabled={canEdit}>
-                                edit
-                            </button>
-                        </section>
+                report && (<div className="bg-white p-5 mb-4 border border-zinc-200 rounded-md transition-all shadow-md" >
+                    <div className="flex justify-between items-center">
+
+                        <p className="text-base italic text-gray-500">{report.author ? `${report.author} asked:` : "Anonymous asked:"}</p>
+
+                        {
+                            canDelete && canEdit && (<section className="flex justify-center items-center">
+
+                                <button onClick={handleDelete} className="material-symbols-outlined block w-9 h-9 bg-transparent border-0 cursor-pointer transition-all text-zinc-500 hover:text-zinc-700">
+                                    delete
+                                </button>
+
+                                <button onClick={handleEdit} className="material-symbols-outlined block w-9 h-9 bg-transparent border-0 cursor-pointer transition-all text-zinc-500 hover:text-zinc-700">
+                                    edit
+                                </button>
+                            </section>
+                            )}
                     </div>
-                    <p className="date">{formatDistanceToNow(new Date(report.createdAt), { addSuffix: true })}</p>
-                    <h2>{report.title}</h2>
-                    <p className="description">{report.description}</p>
+                    <p className="text-sm text-zinc-500">{formatDistanceToNow(new Date(report.createdAt), { addSuffix: true })}</p>
+                    <h2 className="my-3 font-inter text-black text-lg font-bold">{report.title}</h2>
+                    <p className="card-desc font-openSans text-darkgray text-base italic overflow-hidden text-ellipsis line-clamp-3">{report.description}</p>
                 </div>
                 )}
 
-            <h2 className="section-title">Comments:</h2>
+            <h2 className="font-inter font-bold text-base text-darkerblue mb-4">Comments:</h2>
 
             {/* comments section */}
             <Comment />
 
-            <h2 className="section-title">What do you think?</h2>
+            <h2 className="font-inter font-bold text-base text-darkerblue mb-4">What do you think?</h2>
 
             {/* write a comment */}
             <form className="comment-form">
-                <textarea name="comment" placeholder="write something here..." />
-                <button>Submit</button>
+                <textarea
+                    name="comment"
+                    placeholder="write something here..."
+                    className="block w-full p-4 font-openSans text-base mb-4 h-27 resize-y border border-zinc-400 rounded-md bg-white"
+                />
+                <button className="inline-block px-8 py-3 border border-darkerblue rounded-md bg-darkblue font-openSans text-base text-white cursor-pointer transition-colors hover:bg-darkerblue">
+                    Submit
+                </button>
             </form>
         </div>
     )

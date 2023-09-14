@@ -16,26 +16,28 @@ export default function SignupPage() {
     };
 
     return (
-        <div className="signup">
-            <h2>Sign up</h2>
+        <div>
+            <h2 className="font-inter text-darkerblue text-xl text-center font-semibold mb-16">Sign up</h2>
 
-            <form onSubmit={handleSubmit}>
-                <label>Username:</label>
+            <form className="w-full sm:w-96 mx-auto" onSubmit={handleSubmit}>
+                <label className="inline-block pb-2 text-base">Username:</label>
                 <input
                     type="text"
                     name="username"
                     placeholder="Enter username"
                     onChange={(e) => setUsername(e.target.value)}
                     value={username}
+                    className={`block w-full mb-4 p-3 border border-zinc-400 rounded-md bg-white text-base`}
                 />
 
-                <label>Email:</label>
+                <label className="inline-block pb-2 text-base">Email:</label>
                 <input
                     type="email"
                     name="email"
                     placeholder="Enter email"
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
+                    className={`block w-full mb-4 p-3 border border-zinc-400 rounded-md bg-white text-base`}
                 />
 
                 <label>Password:</label>
@@ -45,11 +47,18 @@ export default function SignupPage() {
                     placeholder="Enter password"
                     onChange={(e) => setPassword(e.target.value)}
                     value={password}
+                    className={`block w-full mb-4 p-3 border border-zinc-400 rounded-md bg-white text-base`}
                 />
 
-                <button type="submit" disabled={loading}>Signup</button>
+                <button
+                    type="submit"
+                    disabled={loading}
+                    className="inline-block px-3 py-2 bg-darkblue border rounded-md border-darkerblue text-white transition-colors cursor-pointer hover:bg-darkerblue"
+                >
+                    Sign up
+                </button>
 
-                {error && <p className="error">{error}</p>}
+                {error && <p className="text-base font-openSans text-pinkred bg-pinkwhite border border-pinkred p-4">{error}</p>}
             </form>
         </div>
     )

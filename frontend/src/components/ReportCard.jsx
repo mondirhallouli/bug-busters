@@ -10,8 +10,8 @@ import { Link } from "react-router-dom";
 export default function ReportCard({ report }) {
     const { dispatch } = useBugsContext();
     const { user } = useAuthContext();
-    const [canDelete, setCanDelete] = useState(false);
-    const [canEdit, setCanEdit] = useState(false);
+    const [canDelete, setCanDelete] = useState(true);
+    const [canEdit, setCanEdit] = useState(true);
     const [openEdit, setOpenEdit] = useState(false);
 
     const handleDelete = async () => {
@@ -48,22 +48,31 @@ export default function ReportCard({ report }) {
 
     return (
         <>
-            <div className="card" >
-                <div className="info">
-                    <p>{report.author ? `${report.author} asked:` : "Username asked:"}</p>
-                    <section className="card-actions">
-                        <button onClick={handleDelete} className="material-symbols-outlined delete" disabled={canDelete}>
-                            delete
-                        </button>
-                        <button onClick={handleEdit} className="material-symbols-outlined edit-btn" disabled={canEdit}>
-                            edit
-                        </button>
-                    </section>
+            <div className="bg-white p-5 mb-4 border border-zinc-200 rounded-md transition-all hover:shadow-md" >
+
+                <div className="flex justify-between items-center">
+
+                    <p className="text-base italic text-gray-500">{report.author ? `${report.author} asked:` : "Username asked:"}</p>
+
+                    {
+                        canDelete && canEdit && (<section className="flex justify-center items-center">
+
+                            <button onClick={handleDelete} className="material-symbols-outlined block w-9 h-9 bg-transparent border-0 cursor-pointer transition-all text-zinc-500 hover:text-zinc-700">
+                                delete
+                            </button>
+
+                            <button onClick={handleEdit} className="material-symbols-outlined block w-9 h-9 bg-transparent border-0 cursor-pointer transition-all text-zinc-500 hover:text-zinc-700">
+                                edit
+                            </button>
+                        </section>)
+                    }
                 </div>
-                <p className="date">{formatDistanceToNow(new Date(report.createdAt), { addSuffix: true })}</p>
+
+                <p className="text-sm text-zinc-500">{formatDistanceToNow(new Date(report.createdAt), { addSuffix: true })}</p>
+
                 <Link to={`reports/${report._id}`}>
-                    <h2>{report.title}</h2>
-                    <p className="description">{report.description}</p>
+                    <h2 className="my-3 font-inter text-black text-lg font-bold">{report.title}</h2>
+                    <p className="card-desc text-darkgray text-base italic overflow-hidden text-ellipsis line-clamp-3">{report.description}</p>
                 </Link>
             </div>
         </>
