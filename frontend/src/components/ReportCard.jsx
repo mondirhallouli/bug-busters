@@ -6,8 +6,10 @@ import useBugsContext from "../hooks/useBugsContext";
 import useAuthContext from "../hooks/useAuthContext";
 // react router elements
 import { Link } from "react-router-dom";
+// components
+import CreateForm from "./CreateForm";
 
-export default function ReportCard({ report }) {
+export default function ReportCard({ report, getReports }) {
     const { dispatch } = useBugsContext();
     const { user } = useAuthContext();
     const [canDelete, setCanDelete] = useState(true);
@@ -25,10 +27,9 @@ export default function ReportCard({ report }) {
             method: 'DELETE',
             headers: { "Authorization": `Bearer ${user.token}` }
         });
-        const json = await response.json();
 
         if (response.ok) {
-            dispatch({ type: 'DELETE-REPORT', payload: json });
+            dispatch({ type: 'DELETE-REPORT', payload: report });
         }
 
     };
@@ -36,7 +37,7 @@ export default function ReportCard({ report }) {
     const handleEdit = () => {
 
         // open the edit modal
-        setOpenEdit(!openEdit);
+        setOpenEdit(true);
     };
 
     useEffect(() => {
@@ -75,6 +76,9 @@ export default function ReportCard({ report }) {
                     <p className="card-desc text-darkgray text-base italic overflow-hidden text-ellipsis line-clamp-3">{report.description}</p>
                 </Link>
             </div>
+
+            {/* EDIT FORM/MODAL */}
+            {openEdit && <CreateForm mode="Edit" getReports={getReports} openModal={setOpenEdit} report={report} />}
         </>
     );
 }

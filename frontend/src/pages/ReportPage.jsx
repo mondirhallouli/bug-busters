@@ -67,6 +67,7 @@ export default function ReportPage() {
         }
 
         if (report && (user.username !== report.author)) {
+            console.log(`user.username: ${user.username}; report.author: ${report.author}`);
             setCanDelete(!canDelete);
             setCanEdit(!canEdit);
         }
@@ -82,7 +83,7 @@ export default function ReportPage() {
                         <p className="text-base italic text-gray-500">{report.author ? `${report.author} asked:` : "Anonymous asked:"}</p>
 
                         {
-                            canDelete && canEdit && (<section className="flex justify-center items-center">
+                            (canDelete && canEdit) && (<section className="flex justify-center items-center">
 
                                 <button onClick={handleDelete} className="material-symbols-outlined block w-9 h-9 bg-transparent border-0 cursor-pointer transition-all text-zinc-500 hover:text-zinc-700">
                                     delete
@@ -91,14 +92,14 @@ export default function ReportPage() {
                                 <button onClick={handleEdit} className="material-symbols-outlined block w-9 h-9 bg-transparent border-0 cursor-pointer transition-all text-zinc-500 hover:text-zinc-700">
                                     edit
                                 </button>
-                            </section>
-                            )}
+                            </section>)
+                        }
                     </div>
                     <p className="text-sm text-zinc-500">{formatDistanceToNow(new Date(report.createdAt), { addSuffix: true })}</p>
                     <h2 className="my-3 font-inter text-black text-lg font-bold">{report.title}</h2>
                     <p className="card-desc font-openSans text-darkgray text-base italic overflow-hidden text-ellipsis line-clamp-3">{report.description}</p>
-                </div>
-                )}
+                </div>)
+            }
 
             <h2 className="font-inter font-bold text-base text-darkerblue mb-4">Comments:</h2>
 
