@@ -105,7 +105,7 @@ export async function updateReport(req, res) {
     // fetch the target document and update it using the id and content above
     try {
         // fetch and update
-        const report = await Bug.findOne({ _id: id }, { title, description });
+        const report = await Bug.findOne({ _id: id });
         // stop the deletion if the report isn't created by the current user
         if (report.author !== req.user.username) {
             return;
