@@ -42,8 +42,8 @@ export default function ReportCard({ report, getReports }) {
 
     useEffect(() => {
         if (user.username !== report.author) {
-            setCanDelete(!canDelete);
-            setCanEdit(!canEdit);
+            setCanDelete(false);
+            setCanEdit(false);
         }
     }, []);
 

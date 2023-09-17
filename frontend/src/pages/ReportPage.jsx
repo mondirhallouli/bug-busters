@@ -8,8 +8,10 @@ import { formatDistanceToNow } from "date-fns";
 // components
 import Comment from "../components/Comment";
 import { useEffect, useState } from "react";
+import CreateForm from "../components/CreateForm";
 
 export default function ReportPage() {
+
     const [report, setReport] = useState(null);
     const { reportId } = useParams();
     const { dispatch } = useBugsContext();
@@ -45,7 +47,7 @@ export default function ReportPage() {
     const handleEdit = () => {
 
         // open the edit modal
-        setOpenEdit(!openEdit);
+        setOpenEdit(true);
     };
 
     useEffect(() => {
@@ -68,8 +70,8 @@ export default function ReportPage() {
 
         if (report && (user.username !== report.author)) {
             console.log(`user.username: ${user.username}; report.author: ${report.author}`);
-            setCanDelete(!canDelete);
-            setCanEdit(!canEdit);
+            setCanDelete(false);
+            setCanEdit(false);
         }
     }, [user]);
 
@@ -83,7 +85,7 @@ export default function ReportPage() {
                         <p className="text-base italic text-gray-500">{report.author ? `${report.author} asked:` : "Anonymous asked:"}</p>
 
                         {
-                            (canDelete && canEdit) && (<section className="flex justify-center items-center">
+                            canDelete && canEdit && (<section className="flex justify-center items-center">
 
                                 <button onClick={handleDelete} className="material-symbols-outlined block w-9 h-9 bg-transparent border-0 cursor-pointer transition-all text-zinc-500 hover:text-zinc-700">
                                     delete
@@ -97,7 +99,7 @@ export default function ReportPage() {
                     </div>
                     <p className="text-sm text-zinc-500">{formatDistanceToNow(new Date(report.createdAt), { addSuffix: true })}</p>
                     <h2 className="my-3 font-inter text-black text-lg font-bold">{report.title}</h2>
-                    <p className="card-desc font-openSans text-darkgray text-base italic overflow-hidden text-ellipsis line-clamp-3">{report.description}</p>
+                    <p className="card-desc font-openSans text-darkgray text-base italic">{report.description}</p>
                 </div>)
             }
 
@@ -119,6 +121,9 @@ export default function ReportPage() {
                     Submit
                 </button>
             </form>
+
+            {/* EDIT FORM/MODAL */}
+            {openEdit && <CreateForm mode="Edit" report={report} openModal={setOpenEdit} />}
         </div>
     )
 }
