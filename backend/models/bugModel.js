@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { commentSchema } from "./commentModel.js";
 
 const Schema = mongoose.Schema;
 
@@ -18,7 +17,7 @@ const bugSchema = new Schema({
         required: true,
     },
     comments: {
-        type: [commentSchema],
+        type: [String],
         default: [],
     },
 }, { timestamps: true });

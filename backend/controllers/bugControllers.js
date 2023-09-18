@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Bug from "../models/bugModel.js"
+import Comment from "../models/commentModel.js";
 
 // get all the bug reports
 export async function getReports(req, res) {
@@ -115,5 +116,31 @@ export async function updateReport(req, res) {
         res.status(200).json({ message: "Report updated successfully!", response });
     } catch (error) {
         res.status(400).json({ error: error.message })
+    }
+}
+
+// add comment to report
+export async function addComment(req, res) {
+    // id param from the request
+    const { id } = req.params;
+    // comment details from the request
+    const { username, content } = req.body;
+    // check for valid id
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        res.status(400).json({ error: "The requested bug report does not exist!" })
+        return;
+    }
+
+    try {
+        // fetch the report
+        const report = await Bug.findOne({ _id: id });
+        // create the comment
+        const comment = await Comment.create({ username, content });
+        // add the comment to the report
+        const response = await Bug.updateOne({ _id: id }, { $push: { comments: comment._id } });
+
+        res.status(200).json({ message: "Comment added successfully!", response });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
 }

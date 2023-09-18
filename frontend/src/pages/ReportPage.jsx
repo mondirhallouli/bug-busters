@@ -10,14 +10,19 @@ import Comment from "../components/Comment";
 import { useEffect, useState } from "react";
 import CreateForm from "../components/CreateForm";
 
+
 export default function ReportPage() {
 
     const [report, setReport] = useState(null);
     const { reportId } = useParams();
     const { dispatch } = useBugsContext();
     const { user } = useAuthContext();
+    // comment form state
+    const [comment, setComment] = useState("");
+    const [commentError, setCommentError] = useState(null);
     // navigate to a path
     const navigate = useNavigate();
+
     const [canDelete, setCanDelete] = useState(true);
     const [canEdit, setCanEdit] = useState(true);
     const [openEdit, setOpenEdit] = useState(false);
@@ -50,6 +55,32 @@ export default function ReportPage() {
         setOpenEdit(true);
     };
 
+    // add a comment
+    const handleAddComment = async (e) => {
+        e.preventDefault();
+        setCommentError(null);
+
+        // create request body
+        const commentData = { username: user.username, content: comment };
+        // make the request
+        const response = await fetch(`http://localhost:3000/api/bugs/${report._id}/addComment`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${user.token}`
+            },
+            body: JSON.stringify(commentData),
+        });
+
+        if (!response.ok) {
+            setCommentError(response.error);
+        }
+
+        if (response.ok) {
+            setComment("");
+        }
+    };
+
     useEffect(() => {
         const getReportDetails = async () => {
             // fetch the data inside a try catch block
@@ -76,7 +107,7 @@ export default function ReportPage() {
     }, [user]);
 
     return (
-        <div className="report-page">
+        <div className="report-page" onSubmit={handleAddComment}>
             {!report && <div>loading...</div>}
             {
                 report && (<div className="bg-white p-5 mb-4 border border-zinc-200 rounded-md transition-all shadow-md" >
@@ -115,11 +146,16 @@ export default function ReportPage() {
                 <textarea
                     name="comment"
                     placeholder="write something here..."
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
                     className="block w-full p-4 font-openSans text-base mb-4 h-27 resize-y border border-zinc-400 rounded-md bg-white"
                 />
                 <button className="inline-block px-8 py-3 border border-darkerblue rounded-md bg-darkblue font-openSans text-base text-white cursor-pointer transition-colors hover:bg-darkerblue">
                     Submit
                 </button>
+
+                {/* comment error message */}
+                {commentError && <p className="text-base font-openSans text-pinkred bg-pinkwhite border border-pinkred p-4">{commentError}</p>}
             </form>
 
             {/* EDIT FORM/MODAL */}

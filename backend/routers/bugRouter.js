@@ -4,7 +4,8 @@ import {
     getReport,
     createReport,
     updateReport,
-    deleteReport
+    deleteReport,
+    addComment
 } from "../controllers/bugControllers.js"
 import { requireAuth } from "../middleware/requireAuth.js";
 
@@ -28,5 +29,8 @@ bugRouter.delete('/:id', deleteReport)
 
 // update a report
 bugRouter.patch('/:id', updateReport)
+
+// add comment to report
+bugRouter.post('/:id/addComment', addComment)
 
 export default bugRouter
