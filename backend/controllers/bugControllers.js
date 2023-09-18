@@ -31,8 +31,10 @@ export async function getReport(req, res) {
     try {
         // fetch the report
         const report = await Bug.findOne({ _id: id })
+        // fetch the comments of the report
+        const comments = await Comment.find({ _id: { "$in": report.comments } })
         // respond to the client with the date
-        res.status(200).json(report);
+        res.status(200).json({ report, comments });
     } catch (error) {
         res.status(400).json({ error: error.message })
     }

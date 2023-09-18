@@ -1,11 +1,13 @@
-export default function Comment() {
+import { formatDistanceToNow } from "date-fns";
+
+export default function Comment({ comment }) {
     return (
-        <section className="p-5 mb-5 border rounded-md bg-white shadow-md">
-            <div className="flex justify-start items-center gap-4 mb-3">
-                <p className="font-openSans text-darkblue italic text-base">Username</p>
-                <p className="font-openSans text-sm text-zinc-400">a few seconds ago</p>
+        <section className="p-3 pl-4 mb-4 border rounded-md bg-white shadow-md">
+            <div className="flex justify-start items-center gap-2 mb-2">
+                <p className="font-openSans font-semibold text-darkblue text-base">{comment.username}</p>
+                <p className="font-openSans text-sm text-zinc-400">{formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}</p>
             </div>
-            <p className="font-openSans text-sm text-darkgray italic">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aut, molestias culpa! Inventore vitae, maxime fugit illum odio ea voluptate suscipit!</p>
+            <p className="font-openSans text-sm text-darkgray italic">{comment.content}</p>
         </section>
     );
 }

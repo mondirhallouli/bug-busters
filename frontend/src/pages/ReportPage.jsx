@@ -14,6 +14,8 @@ import CreateForm from "../components/CreateForm";
 export default function ReportPage() {
 
     const [report, setReport] = useState(null);
+    const [reportComments, setReportComments] = useState([]);
+
     const { reportId } = useParams();
     const { dispatch } = useBugsContext();
     const { user } = useAuthContext();
@@ -92,7 +94,8 @@ export default function ReportPage() {
             // else throw an error
             if (!response.ok) throw Error(json.error);
             // if response is ok return the data
-            setReport(json);
+            setReport(json.report);
+            setReportComments(json.comments);
         }
 
         if (user) {
@@ -137,7 +140,15 @@ export default function ReportPage() {
             <h2 className="font-inter font-bold text-base text-darkerblue mb-4">Comments:</h2>
 
             {/* comments section */}
-            <Comment />
+            {
+                !reportComments.length && <p className="font-openSans text-sm italic text-zinc-500 mb-4">No comments...</p>
+            }
+            {
+                reportComments && reportComments.map((comment) => (
+                    <Comment comment={comment} key={comment._id} />
+                ))
+            }
+
 
             <h2 className="font-inter font-bold text-base text-darkerblue mb-4">What do you think?</h2>
 
