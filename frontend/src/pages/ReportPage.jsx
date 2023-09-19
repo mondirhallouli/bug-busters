@@ -7,14 +7,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 // components
 import Comment from "../components/Comment";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CreateForm from "../components/CreateForm";
 
 
 export default function ReportPage() {
 
     const [report, setReport] = useState(null);
-    const [reportComments, setReportComments] = useState([]);
+    const reportComments = useRef([]);
 
     const { reportId } = useParams();
     const { dispatch } = useBugsContext();
@@ -73,13 +73,16 @@ export default function ReportPage() {
             },
             body: JSON.stringify(commentData),
         });
+        // extract data from response
+        const json = await response.json();
 
         if (!response.ok) {
-            setCommentError(response.error);
+            setCommentError(json.error);
         }
 
         if (response.ok) {
             setComment("");
+            reportComments.current = [...reportComments.current, json.comment];
         }
     };
 
@@ -95,7 +98,7 @@ export default function ReportPage() {
             if (!response.ok) throw Error(json.error);
             // if response is ok return the data
             setReport(json.report);
-            setReportComments(json.comments);
+            reportComments.current = json.comments;
         }
 
         if (user) {
@@ -141,10 +144,10 @@ export default function ReportPage() {
 
             {/* comments section */}
             {
-                !reportComments.length && <p className="font-openSans text-sm italic text-zinc-500 mb-4">No comments...</p>
+                !reportComments.current.length && <p className="font-openSans text-sm italic text-zinc-500 mb-4">No comments...</p>
             }
             {
-                reportComments && reportComments.map((comment) => (
+                reportComments.current && reportComments.current.map((comment) => (
                     <Comment comment={comment} key={comment._id} />
                 ))
             }

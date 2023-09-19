@@ -134,14 +134,12 @@ export async function addComment(req, res) {
     }
 
     try {
-        // fetch the report
-        const report = await Bug.findOne({ _id: id });
         // create the comment
         const comment = await Comment.create({ username, content });
         // add the comment to the report
         const response = await Bug.updateOne({ _id: id }, { $push: { comments: comment._id } });
 
-        res.status(200).json({ message: "Comment added successfully!", response });
+        res.status(200).json({ message: "Comment added successfully!", comment });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
