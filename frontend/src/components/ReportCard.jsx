@@ -75,6 +75,16 @@ export default function ReportCard({ report, getReports }) {
                     <h2 className="my-3 font-inter text-black text-lg font-bold">{report.title}</h2>
                     <p className="card-desc text-darkgray text-base italic overflow-hidden text-ellipsis line-clamp-3">{report.description}</p>
                 </Link>
+
+                {/* likes and comments */}
+                <section className="flex justify-start items-center gap-3 mt-3 text-zinc-500">
+                    <div className="flex justify-start items-center gap-2">
+                        <span className="material-symbols-outlined text-xl">
+                            comment
+                        </span>
+                        <span className="">{report.comments.length}</span>
+                    </div>
+                </section>
             </div>
 
             {/* EDIT FORM/MODAL */}

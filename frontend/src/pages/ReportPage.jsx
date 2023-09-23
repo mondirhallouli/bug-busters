@@ -66,7 +66,7 @@ export default function ReportPage() {
         const commentData = { username: user.username, content: comment };
         // make the request
         const response = await fetch(`http://localhost:3000/api/bugs/${report._id}/addComment`, {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${user.token}`
@@ -82,9 +82,21 @@ export default function ReportPage() {
 
         if (response.ok) {
             setComment("");
-            reportComments.current = [...reportComments.current, json.comment];
+            updateReportComments({ type: "UPDATE-COMMENTS", payload: json.report.comments })
         }
     };
+
+    // function to update the reportComments ref array
+    function updateReportComments(action) {
+        switch (action.type) {
+            case 'SET-COMMENTS':
+                reportComments.current = action.payload;
+                break;
+            case 'UPDATE-COMMENTS':
+                reportComments.current = [...action.payload];
+                break;
+        }
+    }
 
     useEffect(() => {
         const getReportDetails = async () => {
@@ -98,22 +110,24 @@ export default function ReportPage() {
             if (!response.ok) throw Error(json.error);
             // if response is ok return the data
             setReport(json.report);
-            reportComments.current = json.comments;
+            // reportComments.current = json.comments;
+            updateReportComments({ type: 'SET-COMMENTS', payload: json.report.comments });
         }
 
         if (user) {
             getReportDetails();
         }
 
-        if (report && (user.username !== report.author)) {
-            console.log(`user.username: ${user.username}; report.author: ${report.author}`);
-            setCanDelete(false);
-            setCanEdit(false);
-        }
-    }, [user]);
+        // FIXME:
+        // if (report && (user.username !== report.author)) {
+        //     console.log(`user.username: ${user.username}; report.author: ${report.author}`);
+        //     setCanDelete(false);
+        //     setCanEdit(false);
+        // }
+    }, [user, updateReportComments]);
 
     return (
-        <div className="report-page" onSubmit={handleAddComment}>
+        <div className="report-page" >
             {!report && <div>loading...</div>}
             {
                 report && (<div className="bg-white p-5 mb-4 border border-zinc-200 rounded-md transition-all shadow-md" >
@@ -148,7 +162,12 @@ export default function ReportPage() {
             }
             {
                 reportComments.current && reportComments.current.map((comment) => (
-                    <Comment comment={comment} key={comment._id} />
+                    <Comment
+                        comment={comment}
+                        updateComments={updateReportComments}
+                        reportId={report._id}
+                        key={comment._id}
+                    />
                 ))
             }
 
@@ -156,7 +175,7 @@ export default function ReportPage() {
             <h2 className="font-inter font-bold text-base text-darkerblue mb-4">What do you think?</h2>
 
             {/* write a comment */}
-            <form className="comment-form">
+            <form className="comment-form" onSubmit={handleAddComment}>
                 <textarea
                     name="comment"
                     placeholder="write something here..."
