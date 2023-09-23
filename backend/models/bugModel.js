@@ -2,6 +2,17 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
+const commentSchema = new Schema({
+    username: {
+        type: String,
+        required: true,
+    },
+    content: {
+        type: String,
+        required: true,
+    }
+}, { timestamps: true });
+
 // bug schema
 const bugSchema = new Schema({
     title: {
@@ -17,7 +28,7 @@ const bugSchema = new Schema({
         required: true,
     },
     comments: {
-        type: [String],
+        type: [commentSchema],
         default: [],
     },
 }, { timestamps: true });

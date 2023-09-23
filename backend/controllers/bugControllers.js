@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import Bug from "../models/bugModel.js"
-import Comment from "../models/commentModel.js";
 
 // get all the bug reports
 export async function getReports(req, res) {
@@ -31,10 +30,8 @@ export async function getReport(req, res) {
     try {
         // fetch the report
         const report = await Bug.findOne({ _id: id })
-        // fetch the comments of the report
-        const comments = await Comment.find({ _id: { "$in": report.comments } })
         // respond to the client with the date
-        res.status(200).json({ report, comments });
+        res.status(200).json({ report });
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -85,7 +82,7 @@ export async function deleteReport(req, res) {
         }
         const response = await Bug.deleteOne({ _id: report._id });
         // respond to the client with the success object 
-        res.status(200).json(response);
+        res.status(200).json({ message: "Bug report deleted successfully!", response });
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -133,13 +130,60 @@ export async function addComment(req, res) {
         return;
     }
 
-    try {
-        // create the comment
-        const comment = await Comment.create({ username, content });
-        // add the comment to the report
-        const response = await Bug.updateOne({ _id: id }, { $push: { comments: comment._id } });
+    // check for empty props on request's body
+    if (username === '' || content === '') throw Error("Comment is not valid due to incomplete data!");
 
-        res.status(200).json({ message: "Comment added successfully!", comment });
+    try {
+        // get the report document and add comment to it
+        const report = await Bug.findOneAndUpdate({ _id: id }, {
+            $push: {
+                comments: { username, content }
+            }
+        }, { new: true });
+
+        res.status(200).json({ message: "Comment added successfully!", report });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
+// remove comment from report
+export async function deleteComment(req, res) {
+    // id parameters from request
+    const { reportId, commentId } = req.params
+
+    // check if the reportId is valid
+    if (!mongoose.Types.ObjectId.isValid(reportId)) {
+        res.status(400).json({ error: "The requested bug report does not exist!" })
+        return;
+    }
+
+    // check if the commentId is valid
+    if (!mongoose.Types.ObjectId.isValid(commentId)) {
+        res.status(400).json({ error: "This comment was already deleted or it doesn't exist!" })
+        return;
+    }
+
+    // use the ids to delete the specified document
+    try {
+        // find the report
+        const report = await Bug.findOne({ _id: reportId });
+
+        // find the comment
+        const comment = report.comments.id(commentId);
+
+        // make sure the request is coming from the author of the comment
+        if (comment.username !== req.user.username) {
+            throw Error("Only the author of a comment can delete it!");
+        }
+
+        // delete the comment
+        const updatedReport = await Bug.findOneAndUpdate({ _id: reportId }, {
+            $pull: { comments: { _id: commentId } }
+        }, { new: true });
+
+        // respond to the client with the success object 
+        res.status(200).json({ message: "comment deleted successfully", updatedReport });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

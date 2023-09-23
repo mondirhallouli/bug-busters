@@ -1,8 +1,9 @@
 import 'dotenv/config.js'
 import express from "express";
-import bugRouter from "./routers/bugRouter.js";
 import mongoose from "mongoose";
 import cors from 'cors'
+// routers
+import bugRouter from "./routers/bugRouter.js";
 import userRouter from './routers/userRouter.js';
 
 // create express app
