@@ -8,7 +8,7 @@ export default function LoginPage() {
     const { login, loading, error } = useLogin();
 
     const handleSubmit = async (evt) => {
-        // evt.preventDefault();
+        evt.preventDefault();
 
         await login(email, password);
     };
