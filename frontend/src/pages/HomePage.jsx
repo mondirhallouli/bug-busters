@@ -28,7 +28,7 @@ export default function HomePage() {
 
     const getReports = async () => {
         // fetch the reports from the server
-        const response = await fetch('http://localhost:3000/api/bugs', {
+        const response = await fetch(import.meta.env.VITE_BUGS_API_URL, {
             headers: { "Authorization": `Bearer ${user.token}` },
         });
         const json = await response.json();

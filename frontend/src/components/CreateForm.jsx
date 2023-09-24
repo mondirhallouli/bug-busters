@@ -27,7 +27,7 @@ export default function CreateForm({ mode, getReports, openModal, report }) {
         const data = { title, description };
 
         // send a post request to the server
-        const response = await fetch('http://localhost:3000/api/bugs', {
+        const response = await fetch(import.meta.env.VITE_BUGS_API_URL, {
             method: 'POST',
             headers: { "Content-Type": "application/json", "Authorization": `Bearer ${user.token}` },
             body: JSON.stringify(data),
@@ -64,7 +64,7 @@ export default function CreateForm({ mode, getReports, openModal, report }) {
         const data = { title, description };
 
         // send a post request to the server
-        const response = await fetch(`http://localhost:3000/api/bugs/${report._id}`, {
+        const response = await fetch(`${import.meta.env.VITE_BUGS_API_URL}/${report._id}`, {
             method: 'PATCH',
             headers: { "Content-Type": "application/json", "Authorization": `Bearer ${user.token}` },
             body: JSON.stringify(data),

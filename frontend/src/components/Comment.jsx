@@ -14,7 +14,7 @@ export default function Comment({ comment, updateComments, reportId }) {
         }
 
         // send a post request to delete the report
-        const response = await fetch(`http://localhost:3000/api/bugs/${reportId}/${comment._id}`, {
+        const response = await fetch(`${import.meta.env.VITE_BUGS_API_URL}/${reportId}/${comment._id}`, {
             method: 'PATCH',
             headers: { 'Authorization': `Bearer ${user.token}` }
         });

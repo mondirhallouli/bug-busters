@@ -23,7 +23,7 @@ export default function ReportCard({ report, getReports }) {
         }
 
         // send a post request to delete the report
-        const response = await fetch(`http://localhost:3000/api/bugs/${report._id}`, {
+        const response = await fetch(`${import.meta.env.VITE_BUGS_API_URL}/${report._id}`, {
             method: 'DELETE',
             headers: { "Authorization": `Bearer ${user.token}` }
         });

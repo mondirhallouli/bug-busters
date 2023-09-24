@@ -16,7 +16,7 @@ export default function useSignup() {
         const data = { username, email, password };
 
         // send a post request
-        const response = await fetch('http://localhost:3000/api/user/signup', {
+        const response = await fetch(`${import.meta.env.VITE_USER_API_URL}/signup`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",

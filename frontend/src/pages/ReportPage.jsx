@@ -37,7 +37,7 @@ export default function ReportPage() {
         }
 
         // send a post request to delete the report
-        const response = await fetch(`http://localhost:3000/api/bugs/${reportId}`, {
+        const response = await fetch(`${import.meta.env.VITE_BUGS_API_URL}/${reportId}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${user.token}` }
         });
@@ -65,7 +65,7 @@ export default function ReportPage() {
         // create request body
         const commentData = { username: user.username, content: comment };
         // make the request
-        const response = await fetch(`http://localhost:3000/api/bugs/${report._id}/addComment`, {
+        const response = await fetch(`${import.meta.env.VITE_BUGS_API_URL}/${report._id}/addComment`, {
             method: 'PATCH',
             headers: {
                 "Content-Type": "application/json",
@@ -101,7 +101,7 @@ export default function ReportPage() {
     useEffect(() => {
         const getReportDetails = async () => {
             // fetch the data inside a try catch block
-            const response = await fetch(`http://localhost:3000/api/bugs/${reportId}`, {
+            const response = await fetch(`${import.meta.env.VITE_BUGS_API_URL}/${reportId}`, {
                 headers: { "Authorization": `Bearer ${user.token}` },
             });
             const json = await response.json();
