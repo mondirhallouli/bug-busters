@@ -10,7 +10,7 @@ export default function SignupPage() {
     const { signup, loading, error } = useSignup();
 
     const handleSubmit = async (evt) => {
-        evt.preventDefault();
+        // evt.preventDefault();
 
         await signup(username, email, password);
     };
