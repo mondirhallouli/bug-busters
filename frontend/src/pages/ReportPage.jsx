@@ -9,6 +9,9 @@ import { formatDistanceToNow } from "date-fns";
 import Comment from "../components/Comment";
 import { useEffect, useRef, useState } from "react";
 import CreateForm from "../components/CreateForm";
+// skeleton loader
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 
 export default function ReportPage() {
@@ -128,7 +131,7 @@ export default function ReportPage() {
 
     return (
         <div className="report-page" >
-            {!report && <div>loading...</div>}
+            {!report && <Skeleton count={10} enableAnimation={true} />}
             {
                 report && (<div className="bg-white p-5 mb-4 border border-zinc-200 rounded-md transition-all shadow-md" >
                     <div className="flex justify-between items-center">

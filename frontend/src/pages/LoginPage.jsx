@@ -43,7 +43,9 @@ export default function LoginPage() {
                     disabled={loading}
                     className="inline-block px-3 py-2 bg-darkblue border rounded-md border-darkerblue text-white transition-colors cursor-pointer hover:bg-darkerblue"
                 >
-                    Login
+                    {
+                        loading ? 'Signing in...' : 'Sign in'
+                    }
                 </button>
 
                 {error && <p className='text-base font-openSans text-pinkred bg-pinkwhite border border-pinkred p-4'>{error}</p>}
